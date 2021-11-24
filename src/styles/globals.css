@@ -1,0 +1,7 @@
+@import 'semantic-ui-css/semantic.min.css';
+
+body {
+  padding-top: 20px;
+  background-color: rgb(9, 58, 145);
+  background-image: linear-gradient(180deg, rgba(9, 58, 145, 1) 0%, rgba(4, 44, 115, 1) 100%);
+}
