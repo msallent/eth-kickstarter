@@ -1,6 +1,11 @@
 import { web3 } from './web3';
 import { AbiItem } from 'web3-utils';
+import Campaign from '../contracts/compiled/Campaign.json';
 import CampaignFactory from '../contracts/compiled/CampaignFactory.json';
+
+export const getCampaign = (address: string) => {
+  return new web3.eth.Contract(Campaign.abi as Array<AbiItem>, address);
+};
 
 export const campaignFactory = new web3.eth.Contract(
   CampaignFactory.abi as Array<AbiItem>,

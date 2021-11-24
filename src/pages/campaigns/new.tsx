@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
 import { Button, Form, Icon, Input, Message } from 'semantic-ui-react';
-import { campaignFactory } from '../../utils/campaignFactory';
+import { campaignFactory } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
 
 const NewCampaign: NextPage = () => {

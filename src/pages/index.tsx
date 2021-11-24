@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useMemo } from 'react';
 import { Card, CardProps, Header } from 'semantic-ui-react';
-import { campaignFactory } from '../utils/campaignFactory';
+import { campaignFactory } from '../utils/contracts';
 
 interface HomeProps {
   campaigns: Array<string>;
