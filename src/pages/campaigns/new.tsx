@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { Button, Form, Icon, Input, Message } from 'semantic-ui-react';
 import { campaignFactory } from '../../utils/contracts';
@@ -8,6 +9,8 @@ const NewCampaign: NextPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [minimumContribution, setMinimumContribution] = useState('');
+
+  const router = useRouter();
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMinimumContribution(event.target.value);
@@ -21,6 +24,8 @@ const NewCampaign: NextPage = () => {
     try {
       const [account] = await web3.eth.getAccounts();
       await campaignFactory.methods.createCampaign(minimumContribution).send({ from: account });
+
+      router.push('/');
     } catch (error: any) {
       setError(error.message);
     }
