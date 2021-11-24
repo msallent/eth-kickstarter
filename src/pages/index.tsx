@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { useMemo } from 'react';
 import { Card, CardProps, Header } from 'semantic-ui-react';
 import { campaignFactory } from '../utils/contracts';
@@ -10,10 +11,14 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ campaigns }) => {
   const cardItems = useMemo<Array<CardProps>>(
     () =>
-      campaigns.map((campaign, index) => ({
-        header: campaign,
+      campaigns.map((address, index) => ({
+        header: address,
         meta: `Campaign #${index + 1}`,
-        description: <a>View Campaign</a>,
+        description: (
+          <Link href={`/campaigns/${address}`}>
+            <a>View Campaign</a>
+          </Link>
+        ),
         image: '/eth-landscape.png',
         fluid: true,
       })),
