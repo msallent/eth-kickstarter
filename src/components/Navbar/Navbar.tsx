@@ -4,22 +4,18 @@ import { Icon, Menu } from 'semantic-ui-react';
 
 export const Navbar: FunctionComponent = () => (
   <Menu inverted>
-    <Menu.Item header link>
-      <Link href="/">
-        <a>ETH Kickstarter</a>
-      </Link>
+    <Menu.Item as={Link} href="/">
+      <a className="item header">ETH Kickstarter</a>
     </Menu.Item>
     <Menu.Menu position="right">
-      <Menu.Item link>
-        <Link href="/">
-          <a>Campaigns</a>
-        </Link>
+      <Menu.Item as={Link} href="/">
+        <a className="item">Campaigns</a>
       </Menu.Item>
-      <Menu.Item link>
-        <Icon name="add circle" />
-        <Link href="/campaigns/new">
-          <a>Add New</a>
-        </Link>
+      <Menu.Item as={Link} href="/campaigns/new">
+        <a className="item">
+          <Icon name="add circle" />
+          <span>Add New</span>
+        </a>
       </Menu.Item>
     </Menu.Menu>
   </Menu>
