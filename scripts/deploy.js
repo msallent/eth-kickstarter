@@ -12,11 +12,15 @@ const web3 = new Web3(provider);
 (async () => {
   const [account] = await web3.eth.getAccounts();
 
-  const contract = await new web3.eth.Contract(CampaignFactory.abi)
-    .deploy({ data: CampaignFactory.evm.bytecode.object })
-    .send({ from: account, gas: '3000000' });
+  try {
+    const contract = await new web3.eth.Contract(CampaignFactory.abi)
+      .deploy({ data: CampaignFactory.evm.bytecode.object })
+      .send({ from: account, gas: 3000000 });
 
-  console.log(`Contract deployed to: ${contract.options.address}`);
+    console.log(`Contract deployed to: ${contract.options.address}`);
+  } catch (error) {
+    console.log(error);
+  }
 
   provider.engine.stop();
 })();
