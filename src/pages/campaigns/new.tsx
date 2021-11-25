@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { Header } from 'semantic-ui-react';
-import { SmallForm } from '../../components/SmallForm/SmallForm';
+import { SmallForm } from '../../components/SmallForm';
 import { campaignFactory } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
 

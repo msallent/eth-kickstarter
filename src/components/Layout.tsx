@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Navbar } from '../Navbar/Navbar';
+import { Navbar } from './Navbar';
 
 export const Layout: FunctionComponent = ({ children }) => (
   <div style={{ maxWidth: '960px', margin: '0 auto' }}>

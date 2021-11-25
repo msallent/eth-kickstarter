@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { Button, Card, CardProps, Grid, Header } from 'semantic-ui-react';
-import { SmallForm } from '../../components/SmallForm/SmallForm';
+import { SmallForm } from '../../components/SmallForm';
 import { getCampaign } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
 
