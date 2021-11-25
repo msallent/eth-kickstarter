@@ -14,13 +14,13 @@ interface RequestsProps {
 
 const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, requests }) => {
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState('');
 
   const router = useRouter();
 
   const onApprove = async (requestIndex: number) => {
     setError('');
-    setIsLoading(true);
+    setIsLoading('approve');
 
     try {
       const [account] = await web3.eth.getAccounts();
@@ -33,12 +33,12 @@ const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, r
       setError(error.message);
     }
 
-    setIsLoading(false);
+    setIsLoading('');
   };
 
   const onFinalize = async (requestIndex: number) => {
     setError('');
-    setIsLoading(true);
+    setIsLoading('finalize');
 
     try {
       const [account] = await web3.eth.getAccounts();
@@ -51,7 +51,7 @@ const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, r
       setError(error.message);
     }
 
-    setIsLoading(false);
+    setIsLoading('');
   };
 
   const tableHeader = useMemo(
@@ -65,33 +65,42 @@ const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, r
   const tableRows = useMemo(
     () =>
       requests.map((request, index) => (
-        <Table.Row key={index} textAlign="center">
+        <Table.Row
+          key={index}
+          textAlign="center"
+          disabled={request.isComplete}
+          positive={!request.isComplete && request.approvals > parseInt(totalContributors) / 2}
+        >
           <Table.Cell>{index}</Table.Cell>
           <Table.Cell>{request.description}</Table.Cell>
           <Table.Cell>{`${request.value} wei`}</Table.Cell>
           <Table.Cell>{request.recipient}</Table.Cell>
           <Table.Cell>{`${request.approvals} / ${totalContributors}`}</Table.Cell>
           <Table.Cell>
-            <Button
-              basic
-              color="green"
-              loading={isLoading}
-              disabled={isLoading}
-              onClick={() => onApprove(index)}
-            >
-              Approve
-            </Button>
+            {!request.isComplete && (
+              <Button
+                basic
+                color="green"
+                loading={isLoading === 'approve'}
+                disabled={!!isLoading}
+                onClick={() => onApprove(index)}
+              >
+                Approve
+              </Button>
+            )}
           </Table.Cell>
           <Table.Cell>
-            <Button
-              basic
-              color="red"
-              loading={isLoading}
-              disabled={isLoading}
-              onClick={() => onFinalize(index)}
-            >
-              Finalize
-            </Button>
+            {!request.isComplete && (
+              <Button
+                basic
+                color="red"
+                loading={isLoading === 'finalize'}
+                disabled={!!isLoading}
+                onClick={() => onFinalize(index)}
+              >
+                Finalize
+              </Button>
+            )}
           </Table.Cell>
         </Table.Row>
       )),
@@ -105,7 +114,9 @@ const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, r
       </Header>
       <Link href={`/campaigns/${router.query.id}/requests/new`}>
         <a>
-          <Button primary>Add Request</Button>
+          <Button primary floated="right" style={{ marginBottom: '1em' }}>
+            Add Request
+          </Button>
         </a>
       </Link>
       <Table celled>
