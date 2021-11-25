@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
-import { Button, Form, Icon, Input, Message } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
+import { SmallForm } from '../../components/SmallForm/SmallForm';
 import { campaignFactory } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
 
@@ -35,26 +36,19 @@ const NewCampaign: NextPage = () => {
 
   return (
     <>
-      <Message
-        attached
-        header="Create a new campaign"
-        content="Fill out the form below to create a new campaign"
-      />
-      <Form onSubmit={onSubmit} className="attached fluid segment">
-        <Form.Field>
-          <label>Minimum contribution</label>
-          <Input type="number" label="wei" labelPosition="right" onChange={onChange} />
-        </Form.Field>
-        <Button primary disabled={!minimumContribution || isLoading} loading={isLoading}>
-          Create
-        </Button>
-      </Form>
-      {(!minimumContribution || error) && (
-        <Message error={!!error} warning={!minimumContribution} attached="bottom">
-          {error ? <Icon name="delete" /> : <Icon name="warning" />}
-          {error || 'Please fill out the form'}
-        </Message>
-      )}
+      <Header size="large" inverted>
+        Create New Campaign:
+      </Header>
+      <div style={{ width: '50%' }}>
+        <SmallForm
+          label="Minimum Contribution"
+          submitLabel="Create"
+          error={error}
+          isLoading={isLoading}
+          onChange={onChange}
+          onSubmit={onSubmit}
+        />
+      </div>
     </>
   );
 };
