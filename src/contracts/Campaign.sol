@@ -30,8 +30,11 @@ contract Campaign {
 
     function contribute() public payable {
         require(msg.value > minimumContribution, 'Contribution is too low');
-        contributors[msg.sender] = true;
-        totalContributors++;
+
+        if (!contributors[msg.sender]) {
+            contributors[msg.sender] = true;
+            totalContributors++;
+        }
     }
 
     function createRequest(
