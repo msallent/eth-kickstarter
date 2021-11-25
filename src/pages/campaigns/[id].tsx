@@ -1,7 +1,8 @@
 import type { GetServerSidePropsContext, NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useMemo, useState } from 'react';
-import { Card, CardProps, Grid, Header } from 'semantic-ui-react';
+import { Button, Card, CardProps, Grid, Header } from 'semantic-ui-react';
 import { SmallForm } from '../../components/SmallForm/SmallForm';
 import { getCampaign } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
@@ -102,6 +103,13 @@ const Campaign: NextPage<CampaignProps> = ({
             onChange={onChange}
             onSubmit={onSubmit}
           />
+          <Link href={`/campaigns/${router.query.id}/requests`}>
+            <a>
+              <Button style={{ marginTop: '1em' }} color="violet">
+                View Requests
+              </Button>
+            </a>
+          </Link>
         </Grid.Column>
       </Grid>
     </>
