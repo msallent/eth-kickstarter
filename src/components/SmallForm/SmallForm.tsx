@@ -23,7 +23,7 @@ export const SmallForm: FunctionComponent<SmallFormProps> = ({
       <label style={{ color: 'white' }}>{label}</label>
       <Input type="number" label="wei" labelPosition="right" onChange={onChange} />
     </Form.Field>
-    <Button primary loading={isLoading}>
+    <Button primary disabled={isLoading} loading={isLoading}>
       {submitLabel}
     </Button>
     <Message error>
