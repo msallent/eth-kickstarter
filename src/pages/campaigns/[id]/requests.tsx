@@ -9,7 +9,13 @@ import { web3 } from '../../../utils/web3';
 interface RequestsProps {
   totalRequests: string;
   totalContributors: string;
-  requests: Array<any>;
+  requests: Array<{
+    value: string;
+    recipient: string;
+    approvals: string;
+    description: string;
+    isComplete: boolean;
+  }>;
 }
 
 const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, requests }) => {
@@ -69,7 +75,9 @@ const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, r
           key={index}
           textAlign="center"
           disabled={request.isComplete}
-          positive={!request.isComplete && request.approvals > parseInt(totalContributors) / 2}
+          positive={
+            !request.isComplete && parseInt(request.approvals) > parseInt(totalContributors) / 2
+          }
         >
           <Table.Cell>{index}</Table.Cell>
           <Table.Cell>{request.description}</Table.Cell>
