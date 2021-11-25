@@ -1,7 +1,8 @@
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
-import { Card, CardProps, Header } from 'semantic-ui-react';
+import { ChangeEvent, useMemo, useState } from 'react';
+import { Card, CardProps, Grid, Header } from 'semantic-ui-react';
+import { SmallForm } from '../../components/SmallForm/SmallForm';
 import { getCampaign } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
 
@@ -20,7 +21,34 @@ const Campaign: NextPage<CampaignProps> = ({
   totalContributors,
   manager,
 }) => {
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [contribution, setContribution] = useState('');
+
   const router = useRouter();
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setContribution(event.target.value);
+    setError('');
+  };
+
+  const onSubmit = async () => {
+    setError('');
+    setIsLoading(true);
+
+    try {
+      const [account] = await web3.eth.getAccounts();
+
+      const campaign = getCampaign(router.query.id as string);
+      await campaign.methods.contribute().send({ from: account, value: contribution });
+
+      router.reload();
+    } catch (error: any) {
+      setError(error.message);
+    }
+
+    setIsLoading(false);
+  };
 
   const cardItems = useMemo<Array<CardProps>>(
     () => [
@@ -29,11 +57,7 @@ const Campaign: NextPage<CampaignProps> = ({
         meta: 'Campaign Manager',
         description:
           'Address who created the campaign. Can create new requests to utilize available funds.',
-      },
-      {
-        header: minimumContribution,
-        meta: 'Minimum Contribution (wei)',
-        description: 'You must contribute at least this much wei to be a contributor.',
+        style: { overflowWrap: 'break-word' },
       },
       {
         header: totalRequests,
@@ -47,7 +71,12 @@ const Campaign: NextPage<CampaignProps> = ({
         description: 'Number of people who have already contributed to this campaign.',
       },
       {
-        header: web3.utils.fromWei(balance, 'ether'),
+        header: `${minimumContribution} wei`,
+        meta: 'Minimum Contribution',
+        description: 'You must contribute at least this much wei to be a contributor.',
+      },
+      {
+        header: `${web3.utils.fromWei(balance, 'ether')} ETH`,
         meta: 'Balance',
         description: 'Current available funds for the campaign.',
       },
@@ -58,9 +87,23 @@ const Campaign: NextPage<CampaignProps> = ({
   return (
     <>
       <Header size="large" inverted>
-        Campaign {router.query.id}:
+        {router.query.id}:
       </Header>
-      <Card.Group items={cardItems} itemsPerRow="2" />
+      <Grid>
+        <Grid.Column width="10">
+          <Card.Group items={cardItems} itemsPerRow="2" />
+        </Grid.Column>
+        <Grid.Column width="6">
+          <SmallForm
+            label="Amount to Contribute"
+            submitLabel="Contribute"
+            error={error}
+            isLoading={isLoading}
+            onChange={onChange}
+            onSubmit={onSubmit}
+          />
+        </Grid.Column>
+      </Grid>
     </>
   );
 };
