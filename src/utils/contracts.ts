@@ -9,5 +9,5 @@ export const getCampaign = (address: string) => {
 
 export const campaignFactory = new web3.eth.Contract(
   CampaignFactory.abi as Array<AbiItem>,
-  '0xbE09A4f3c69D30d938d05660796DfaefBe988fD1'
+  '0x44d2B2D66ADb2d6CBE89072aBc756306A4766d2C'
 );
