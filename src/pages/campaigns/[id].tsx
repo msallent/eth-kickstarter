@@ -8,10 +8,10 @@ import { getCampaign } from '../../utils/contracts';
 import { web3 } from '../../utils/web3';
 
 interface CampaignProps {
-  minimumContribution: number;
+  minimumContribution: string;
   balance: string;
-  totalRequests: number;
-  totalContributors: number;
+  totalRequests: string;
+  totalContributors: string;
   manager: string;
 }
 
