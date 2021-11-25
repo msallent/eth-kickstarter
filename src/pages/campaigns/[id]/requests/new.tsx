@@ -37,7 +37,9 @@ const NewRequest: NextPage = () => {
       const [account] = await web3.eth.getAccounts();
 
       const campaign = getCampaign(router.query.id as string);
-      await campaign.methods.createRequest(value, description, recipient).send({ from: account });
+      await campaign.methods
+        .createRequest(web3.utils.toWei(value, 'ether'), description, recipient)
+        .send({ from: account });
 
       router.push(`/campaigns/${router.query.id}/requests`);
     } catch (error: any) {
@@ -60,7 +62,13 @@ const NewRequest: NextPage = () => {
           </Form.Field>
           <Form.Field>
             <label style={{ color: 'white' }}>Value</label>
-            <Input label="wei" labelPosition="right" onChange={onChangeValue} />
+            <Input
+              type="number"
+              label="ETH"
+              labelPosition="right"
+              onChange={onChangeValue}
+              step="0.01"
+            />
           </Form.Field>
           <Form.Field>
             <label style={{ color: 'white' }}>Recipient</label>

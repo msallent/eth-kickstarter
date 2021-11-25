@@ -24,7 +24,9 @@ const NewCampaign: NextPage = () => {
 
     try {
       const [account] = await web3.eth.getAccounts();
-      await campaignFactory.methods.createCampaign(minimumContribution).send({ from: account });
+      await campaignFactory.methods
+        .createCampaign(web3.utils.toWei(minimumContribution, 'ether'))
+        .send({ from: account });
 
       router.push('/');
     } catch (error: any) {

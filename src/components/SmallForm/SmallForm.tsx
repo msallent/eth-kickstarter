@@ -21,7 +21,7 @@ export const SmallForm: FunctionComponent<SmallFormProps> = ({
   <Form onSubmit={onSubmit} error={!!error}>
     <Form.Field>
       <label style={{ color: 'white' }}>{label}</label>
-      <Input type="number" label="wei" labelPosition="right" onChange={onChange} />
+      <Input type="number" label="ETH" labelPosition="right" onChange={onChange} step="0.01" />
     </Form.Field>
     <Button primary disabled={isLoading} loading={isLoading}>
       {submitLabel}

@@ -81,7 +81,7 @@ const Requests: NextPage<RequestsProps> = ({ totalRequests, totalContributors, r
         >
           <Table.Cell>{index}</Table.Cell>
           <Table.Cell>{request.description}</Table.Cell>
-          <Table.Cell>{`${request.value} wei`}</Table.Cell>
+          <Table.Cell>{`${web3.utils.fromWei(request.value, 'ether')} ETH`}</Table.Cell>
           <Table.Cell>{request.recipient}</Table.Cell>
           <Table.Cell>{`${request.approvals} / ${totalContributors}`}</Table.Cell>
           <Table.Cell>

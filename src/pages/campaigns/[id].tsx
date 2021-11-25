@@ -41,7 +41,9 @@ const Campaign: NextPage<CampaignProps> = ({
       const [account] = await web3.eth.getAccounts();
 
       const campaign = getCampaign(router.query.id as string);
-      await campaign.methods.contribute().send({ from: account, value: contribution });
+      await campaign.methods
+        .contribute()
+        .send({ from: account, value: web3.utils.toWei(contribution, 'ether') });
 
       router.reload();
     } catch (error: any) {
@@ -72,7 +74,7 @@ const Campaign: NextPage<CampaignProps> = ({
         description: 'Number of people who have already contributed to this campaign.',
       },
       {
-        header: `${minimumContribution} wei`,
+        header: `${web3.utils.fromWei(minimumContribution, 'ether')} ETH`,
         meta: 'Minimum Contribution',
         description: 'You must contribute at least this much wei to be a contributor.',
       },
