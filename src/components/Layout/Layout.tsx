@@ -1,10 +1,9 @@
 import { FunctionComponent } from 'react';
 import { Navbar } from '../Navbar/Navbar';
-import styles from './Layout.module.css';
 
 export const Layout: FunctionComponent = ({ children }) => (
-  <div className={styles.container}>
+  <div style={{ maxWidth: '960px', margin: '0 auto' }}>
     <Navbar />
-    <div className={styles.wrapper}>{children}</div>
+    <div style={{ marginTop: '40px' }}>{children}</div>
   </div>
 );
